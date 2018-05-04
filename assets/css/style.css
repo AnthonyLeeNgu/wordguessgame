@@ -1,0 +1,18 @@
+body {
+    Background-color: #296695;
+
+}
+
+.jumbotron {
+    background-color: #296695;
+}
+
+h1 {
+    color: white; 
+    font-family: monospace;
+}
+
+.btn-info {
+    background-color: #296695;
+    border-color: #296695;
+}
