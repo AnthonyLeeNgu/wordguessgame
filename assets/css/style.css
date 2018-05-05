@@ -1,18 +1,15 @@
 body {
-    Background-color: #296695;
+    Background-color: white;
 
 }
 
 .jumbotron {
-    background-color: #296695;
+    background-color: white;
 }
 
 h1 {
-    color: white; 
+    color: black; 
     font-family: monospace;
+
 }
 
-.btn-info {
-    background-color: #296695;
-    border-color: #296695;
-}
