@@ -1,43 +1,65 @@
-var alpabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var computerChoice = alpabet[Math.floor(Math.random() * alpabet.length)];
+
+var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+
 var wins = 0;
 var losses = 0;
-var guessLeft = 9;
-var userGuesses = [];
+var guesses = 9;
+var guessesLeft = 9;
+var guessedLetters = [];
+var letterToGuess = null;
 
-var winsDOM = document.getElementById('wins');
-var guessesLeftDOM = document.getElementById('gLeft');
-var lossesDOM = document.getElementById('losses');
-var userGuessesDOM = document.getElementById('userGuesses');
+var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 
-function reset() {
-  computerChoice = alpabet[Math.floor(Math.random() * alpabet.length)];
-  guessLeft = 9;
-  guessesLeftDOM.innerHTML = guessLeft;
-  userGuesses = [];
-  userGuessesDOM.innerHTML = userGuesses 
+var updateGuessesLeft = function() {
+
+  document.querySelector('#guessLeft').innerHTML = "Guesses left: " + guessesLeft;
+};
+
+var updateLetterToGuess = function() {
+  this.letterToGuess = this.computerChoices[Math.floor(Math.random() * this.computerChoices.length)];
+};
+var updateGuessesSoFar = function() {
+
+  document.querySelector('#letGuess').innerHTML = "User Guesses: " + guessedLetters.join(', ');
+};
+
+var reset = function() {
+  totalGuesses = 9;
+  guessesLeft = 9;
+  guessedLetters = [];
+
+  updateLetterToGuess();
+  updateGuessesLeft();
+  updateGuessesSoFar();
 }
 
-document.addEventListener("keyup", function (event) {
-  console.log(event.key);
-  var userGuess = event.key;
-  console.log(userGuess);
-  if(userGuess === computerChoice){
-    wins = wins + 1;
-    reset();
-    winsDOM.innerHTML = wins;
-  }
-  else if(userGuess !== computerChoice) {
-    guessLeft = guessLeft - 1;
-    guessesLeftDOM.innerHTML = guessLeft;
+updateLetterToGuess();
+updateGuessesLeft();
 
-    userGuesses.push(userGuess)
-    userGuessesDOM.innerHTML = userGuesses.join()
 
-    if (guessLeft <= 0) {
-      losses = losses + 1;
-      reset();
-      lossesDOM.innerHTML = losses;
-    }
-  }
-})
+
+document.onkeyup = function(event) {
+    guessesLeft--;
+  var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
+  guessedLetters.push(userGuess);
+  updateGuessesLeft();
+  updateGuessesSoFar();
+
+        if (guessesLeft > 0){
+            if (userGuess == letterToGuess){
+                wins++;
+                document.querySelector('#wins').innerHTML = "Wins: " + wins;
+                alert("Yes, you are psychic!");
+                reset();
+            }
+        }else if(guessesLeft == 0){
+            
+            losses++;
+            document.querySelector('#losses').innerHTML = "Losses: " + losses;
+            alert("Nice try, Chump! Try again!");
+           
+            reset();
+        }
+};
